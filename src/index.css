@@ -80,7 +80,7 @@ h1 {
 .hero-text {
   max-width: 650px;
   margin: 0 auto;
-  color: #e9f0f7;
+  color: var(--muted-text);
   font-size: 1.2rem;
   line-height: 1.6;
 }
@@ -96,11 +96,11 @@ h1 {
 
 .card {
   width: 100%;
-  background: #1e1b2d;
-  border: 1px solid #332d4d;
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 20px;
   padding: 24px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 20px 60px var(--shadow);
 }
 
 .card h2 {
