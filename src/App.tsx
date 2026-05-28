@@ -183,7 +183,7 @@ function App() {
 
         <img
           className="hero-logo"
-          src="/d20-logo.svg"
+          src={`${import.meta.env.BASE_URL}d20-logo.svg`}
           alt="Roll Oracle d20 logo"
         />
 
