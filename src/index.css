@@ -27,7 +27,8 @@ select {
 }
 
 .hero-logo {
-  width: 600px;
+  width: min(600px, 100%);
+  max-width: 100%;
   height: auto;
   margin: 12px auto 0;
   display: block;
@@ -58,11 +59,13 @@ h1 {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 24px;
+  width: 100%;
   max-width: 1000px;
   margin: 0 auto;
 }
 
 .card {
+  width: 100%;
   background: #1e1b2d;
   border: 1px solid #332d4d;
   border-radius: 20px;
@@ -128,14 +131,41 @@ button:hover {
 }
 
 @media (max-width: 750px) {
-  .dashboard {
-    grid-template-columns: 1fr;
+  .app {
+    padding: 24px 14px;
+    overflow-x: hidden;
   }
 
-  .app {
-    padding: 32px 16px;
+  .hero {
+    margin-bottom: 28px;
+  }
+
+  .hero-logo {
+    width: min(340px, 90vw);
+  }
+
+  h1 {
+    font-size: clamp(2.75rem, 14vw, 4rem);
+  }
+
+  .hero-text {
+    font-size: 1rem;
+  }
+
+  .dashboard {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .card {
+    padding: 18px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
   }
 }
+
 .empty-message {
   color: #aaa1c8;
 }
