@@ -105,6 +105,27 @@ function App() {
     return "Suspiciously Normal";
   }
 
+  function getCurseScore() {
+    if (totalRolls < 5 || averageRoll === null) {
+      return 0;
+    }
+
+    const expectedAverage = (dieType + 1) / 2;
+
+    // If your average is lower than expected, your dice are more cursed.
+    const curseDifference = expectedAverage - averageRoll;
+
+    // Converts the curse difference into a 0-100 meter.
+    const rawScore = 50 + (curseDifference / expectedAverage) * 50;
+
+    return Math.max(0, Math.min(100, Math.round(rawScore)));
+  }
+
+  const curseScore = getCurseScore();
+
+  const curseMeterText =
+    totalRolls < 5 ? "Need at least 5 rolls" : `${curseScore}% Cursed`;
+
   function handleCreateProfile(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -344,6 +365,23 @@ function App() {
             <div>
               <p className="stat-label">Curse Rating</p>
               <p className="stat-value">{getCurseRating()}</p>
+            </div>
+
+            <div className="curse-meter-section">
+              <div className="curse-meter-header">
+                <span>Blessed</span>
+                <strong>{curseMeterText}</strong>
+                <span>Cursed</span>
+              </div>
+
+              <div className="curse-meter">
+                <div
+                  className="curse-meter-fill"
+                  style={{
+                    width: totalRolls < 5 ? "0%" : `${curseScore}%`,
+                  }}
+                />
+              </div>
             </div>
           </div>
         </div>
