@@ -190,14 +190,13 @@
 
 .curse-meter-header {
   display: flex;
-  justify-content: space-between;
-  gap: 12px;
+  justify-content: center;
   margin-bottom: 8px;
   font-size: 0.9rem;
 }
 
 .curse-meter-header strong {
-  color: var(--accent, #f7d774);
+  color: #f7d774;
 }
 
 .curse-meter {
