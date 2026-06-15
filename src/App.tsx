@@ -13,6 +13,40 @@ type DiceProfile = {
   rolls: Roll[];
 };
 
+const STORAGE_KEYS = {
+  profiles: "roll-oracle-profiles",
+  activeProfileId: "roll-oracle-active-profile-id",
+};
+
+const defaultProfiles: DiceProfile[] = [
+  {
+    id: 1,
+    name: "Default d20",
+    dieType: 20,
+    rolls: [],
+  },
+];
+
+function loadProfiles() {
+  const savedProfiles = localStorage.getItem(STORAGE_KEYS.profiles);
+
+  if (!savedProfiles) {
+    return defaultProfiles;
+  }
+
+  try {
+    const parsedProfiles = JSON.parse(savedProfiles);
+
+    if (Array.isArray(parsedProfiles) && parsedProfiles.length > 0) {
+      return parsedProfiles;
+    }
+
+    return defaultProfiles;
+  } catch {
+    return defaultProfiles;
+  }
+}
+
 function App() {
   const [theme, setTheme] = useState<"dark" | "light">(() => {
     const savedTheme = localStorage.getItem("theme");
@@ -38,17 +72,36 @@ function App() {
   const [profileName, setProfileName] = useState("");
   const [profileDieType, setProfileDieType] = useState(20);
 
-  const [profiles, setProfiles] = useState<DiceProfile[]>([
-    {
-      id: 1,
-      name: "Default d20",
-      dieType: 20,
-      rolls: [],
-    },
-  ]);
+  const [profiles, setProfiles] = useState<DiceProfile[]>(loadProfiles);
 
-  const [activeProfileId, setActiveProfileId] = useState(1);
+  const [activeProfileId, setActiveProfileId] = useState(() => {
+    const savedActiveProfileId = localStorage.getItem(STORAGE_KEYS.activeProfileId);
 
+    if (savedActiveProfileId) {
+      return Number(savedActiveProfileId);
+    }
+
+  return 1;
+});
+
+  useEffect(() => {
+  localStorage.setItem(STORAGE_KEYS.profiles, JSON.stringify(profiles));
+}, [profiles]);
+
+useEffect(() => {
+  localStorage.setItem(STORAGE_KEYS.activeProfileId, String(activeProfileId));
+}, [activeProfileId]);
+
+useEffect(() => {
+  const activeProfileExists = profiles.some(
+    (profile) => profile.id === activeProfileId
+  );
+
+  if (!activeProfileExists && profiles.length > 0) {
+    setActiveProfileId(profiles[0].id);
+  }
+}, [profiles, activeProfileId]);
+  
   const activeProfile =
     profiles.find((profile) => profile.id === activeProfileId) ?? profiles[0];
 
