@@ -62,7 +62,6 @@ select {
   height: auto;
   margin: 12px auto 0;
   display: block;
-  filter: drop-shadow(5px 0px 5px rgba(127, 92, 255, 0.5));
 }
 
 .eyebrow {
